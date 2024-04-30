@@ -18,4 +18,6 @@ samples, guidance on mobile development, and a full API reference.
 =======
 # Notes-Application
 An aesthetically pleasing application developed in Flutter to organize your todo lists and notes.
+
+STILL UNDER PRODUCTION!!!
 >>>>>>> origin/master
