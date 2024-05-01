@@ -42,4 +42,10 @@ class NotesService {
     return _firestore.collection('Users').doc(userId).collection('notes').doc(noteId).delete();
   }
 
+  //get a single note
+  Stream<DocumentSnapshot<Map<String, dynamic>>> getNoteById (String userId, noteId) {
+    final noteStream = _firestore.collection('Users').doc(userId).collection('notes').doc(noteId).snapshots();
+    return noteStream;
+  }
+
 }

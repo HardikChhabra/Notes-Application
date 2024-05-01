@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_list/auth/auth_service.dart';
 import 'package:todo_list/components/drawer.dart';
+import 'package:todo_list/components/notes_list_tile.dart';
 import 'package:todo_list/components/textfield.dart';
+import 'package:todo_list/pages/notes_page.dart';
 import 'package:todo_list/services/note_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,12 +27,12 @@ class HomePage extends StatelessWidget {
           onPressed: () {
             //adding a new note
             if(docId == null) {
-              _notesService.addNote("Nothing", note.text, _authService.getCurrentUser()!.email.toString());
+              _notesService.addNote("Title", note.text, _authService.getCurrentUser()!.email.toString());
             }
 
             //updating an existing note
             else{
-              _notesService.updateNote('Nothing', docId, note.text, _authService.getCurrentUser()!.email.toString());
+              _notesService.updateNote('Title', docId, note.text, _authService.getCurrentUser()!.email.toString());
             }
             note.clear();
             Navigator.pop(context);
@@ -45,62 +48,86 @@ class HomePage extends StatelessWidget {
     authService.signOut();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
       appBar: AppBar(
-        title: const Text("H O M E"),
+        title: Text(
+          "Notes",
+          style: GoogleFonts.playfairDisplay(
+              textStyle: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.bold,
+                fontSize: 40,
+                letterSpacing: 3.0,
+              )
+          ),
+        ),
+        toolbarHeight: 80,
       ),
       drawer: HomeDrawer(
         onTap: logout,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => openNoteBox(context, null),
-        child: const Text('+'),
+        child: const Text(
+          "+",
+          style: TextStyle(
+            fontSize: 30
+          ),
+        ),
       ),
-      body: StreamBuilder(
-        stream: _notesService.getNotesStream(_authService.getCurrentUser()!.email.toString()),
-        builder: (context, snapshot) {
-          //if we have data, get all docs
-          if(snapshot.hasData) {
-            List notesList = snapshot.data!.docs;
+      body: Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StreamBuilder(
+            stream: _notesService.getNotesStream(_authService.getCurrentUser()!.email.toString()),
+            builder: (context, snapshot) {
+              //if we have data, get all docs
+              if(snapshot.hasData) {
+                List notesList = snapshot.data!.docs;
 
-            //display the list
-            return ListView.builder(
-              itemCount: notesList.length,
-              itemBuilder: (context, index) {
-                DocumentSnapshot document = notesList[index];
-                String docId = document.id;
-
-                Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-                String noteText = data['content'];
-
-                return ListTile(
-                  title: Text(noteText),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //update
-                      IconButton(
-                        icon: const Icon(Icons.settings),
-                        onPressed: () => openNoteBox(context, docId),
+                if(notesList.isEmpty) {
+                  return Center(
+                    child: Text(
+                      "No notes to Show\nCreate new note",
+                      style: GoogleFonts.openSans(
+                          textStyle: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.normal,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
                       ),
+                    ),
+                  );
+                }
 
-                      //delete
-                      IconButton(
-                        icon: const Icon(Icons.delete_forever),
-                        onPressed: () => _notesService.deleteNote(docId, _authService.getCurrentUser()!.email.toString()),
-                      ),
-                    ],
-                  ),
+                //display the list
+                return ListView.builder(
+                  itemCount: notesList.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot document = notesList[index];
+                    String docId = document.id;
+
+                    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                    Note note = Note.fromMap(data);
+
+                    return NoteListTile(title: note.title, content: note.content, docId: docId, openNoteBox: openNoteBox, context: context);
+                  },
                 );
-              },
-            );
-          }
-          else {
-            return const Text("No notes");
-          }
-        },
+              }
+              else {
+                return const Text("No notes");
+              }
+            },
+          ),
+        ),
       ),
     );
   }
