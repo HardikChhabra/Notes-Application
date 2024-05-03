@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo_list/auth/auth_service.dart';
 import 'package:todo_list/services/note_service.dart';
 
@@ -15,11 +15,11 @@ class NotesPage extends StatelessWidget {
   final TextEditingController _content = TextEditingController();
   final TextEditingController _title = TextEditingController();
 
-  void onPop (bool? notRequired) {
+  void onPop (bool isPinned, bool isLocked) {
 
     //if value changed
     if(_content.text.isNotEmpty) {
-      _notesService.updateNote(_title.text, noteId!, _content.text, _authService.getCurrentUser()!.email.toString());
+      _notesService.updateNote(_title.text, noteId!, _content.text, _authService.getCurrentUser()!.email.toString(), isLocked, isPinned);
     }
     //if value removed
     else{
@@ -29,7 +29,7 @@ class NotesPage extends StatelessWidget {
 
   void createNewNote (bool? notRequired) {
     if(_content.text.isNotEmpty) {
-      _notesService.addNote(_title.text, _content.text, _authService.getCurrentUser()!.email.toString());
+      _notesService.addNote(_title.text, _content.text, _authService.getCurrentUser()!.email.toString(), false, false);
 
     }
   }
@@ -50,7 +50,9 @@ class NotesPage extends StatelessWidget {
 
             //display the note
             return PopScope(
-              onPopInvoked: noteId == null ? createNewNote : onPop,
+              onPopInvoked: (bool? notRequired) {
+                onPop(note.isPinned, note.isLocked);
+              },
               child: Scaffold(
                 body: SafeArea(
                   child: Column(
@@ -90,7 +92,9 @@ class NotesPage extends StatelessWidget {
                                 )
                               ],
                             ),
-                            IconButton(onPressed: () {},
+                            IconButton(onPressed: () {
+                              Share.share('${_title.text}\n${_content.text}');
+                            },
                                 icon: Icon(
                                   Icons.ios_share_outlined, color: Theme
                                     .of(context)
@@ -222,7 +226,9 @@ class NotesPage extends StatelessWidget {
                           )
                         ],
                       ),
-                      IconButton(onPressed: () {},
+                      IconButton(onPressed: () {
+                        Share.share('${_title.text}\n${_content.text}');
+                      },
                           icon: Icon(
                             Icons.ios_share_outlined, color: Theme
                               .of(context)
@@ -314,13 +320,17 @@ class NotesPage extends StatelessWidget {
 class Note {
   String title;
   String content;
+  bool isLocked;
+  bool isPinned;
 
-  Note({required this.title, required this.content});
+  Note({required this.title, required this.content, required this.isLocked, required this.isPinned});
 
   factory Note.fromMap(Map<String, dynamic> map) {
     return Note(
       title: map['title'],
       content: map['content'],
+      isLocked: map['isLocked'],
+      isPinned: map['isPinned'],
     );
   }
 }

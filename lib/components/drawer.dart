@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_list/pages/home_page.dart';
+import 'package:todo_list/pages/locked_notes_page.dart';
 import 'package:todo_list/pages/settings_page.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -42,6 +44,7 @@ class HomeDrawer extends StatelessWidget {
                   ),
                   onTap: () {
                     Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                   },
                 ),
 
@@ -62,6 +65,24 @@ class HomeDrawer extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+                  },
+                ),
+                ListTile(
+                  title: Text(
+                    "L O C K E D",
+                    style: GoogleFonts.openSans(
+                        textStyle: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                    ),
+                  ),
+                  leading: Icon(
+                    Icons.lock_outline_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const LockedNotePage()));
                   },
                 ),
               ],

@@ -1,25 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_list/auth/auth_service.dart';
-import 'package:todo_list/components/drawer.dart';
-import 'package:todo_list/components/notes_list_tile.dart';
-import 'package:todo_list/components/pinned_note_list_tile.dart';
-import 'package:todo_list/pages/notes_page.dart';
 import 'package:todo_list/services/note_service.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../auth/auth_service.dart';
+import '../components/drawer.dart';
+import '../components/locked_note_list_tile.dart';
+import '../components/notes_list_tile.dart';
+import 'notes_page.dart';
+
+class LockedNotePage extends StatefulWidget {
+  const LockedNotePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<LockedNotePage> createState() => _LockedNotePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final TextEditingController note = TextEditingController();
+class _LockedNotePageState extends State<LockedNotePage> {
 
   final NotesService _notesService = NotesService();
-
   final AuthService _authService = AuthService();
 
   void openNoteBox(context, String? docId) {
@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
     AuthService authService = AuthService();
     authService.signOut();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,15 +54,13 @@ class _HomePageState extends State<HomePage> {
         child: const Text(
           "+",
           style: TextStyle(
-            fontSize: 30
+              fontSize: 30
           ),
         ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Title text
             Padding(
@@ -72,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    "All Notes",
+                    "Locked Notes",
                     style: GoogleFonts.playfairDisplay(
                         textStyle: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
@@ -85,28 +82,10 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-
-            //Pinned Notes Heading
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Text(
-                "Pinned",
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      letterSpacing: 2.0,
-                    )
-                ),
-              ),
-            ),
-
-            //Pinned notes stream
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: StreamBuilder(
-                stream: _notesService.getPinnedNotesStream(_authService.getCurrentUser()!.email.toString()),
+                stream: _notesService.getLockedNotesStream(_authService.getCurrentUser()!.email.toString()),
                 builder: (context, snapshot) {
                   //if we have data, get all docs
                   if(snapshot.hasData) {
@@ -116,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                     if(notesList.isEmpty) {
                       return Center(
                         child: Text(
-                          "No Pinned Notes",
+                          "No Locked Notes",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
                                 fontSize: 20,
@@ -140,77 +119,7 @@ class _HomePageState extends State<HomePage> {
 
                         Map<String, dynamic> data = document.data() as Map<String, dynamic>;
                         Note note = Note.fromMap(data);
-                        return PinnedNote(
-                          title: note.title,
-                          content: note.content,
-                          docId: docId,
-                          openNoteBox: openNoteBox,
-                          context: context,
-                        );
-                      },
-                    );
-                  }
-                  else {
-                    return const Text("No notes");
-                  }
-                },
-              ),
-            ),
-
-            //non-pinned notes heading
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              child: Text(
-                "All Notes",
-                style: GoogleFonts.openSans(
-                    textStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      letterSpacing: 2.0,
-                    )
-                ),
-              ),
-            ),
-
-            //Non-pinned Notes Stream
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: StreamBuilder(
-                stream: _notesService.getNonPinnedNotesStream(_authService.getCurrentUser()!.email.toString()),
-                builder: (context, snapshot) {
-                  //if we have data, get all docs
-                  if(snapshot.hasData) {
-                    List notesList = snapshot.data!.docs;
-
-                    //if no notes to show
-                    if(notesList.isEmpty) {
-                      return Center(
-                        child: Text(
-                          "No notes to Show\nCreate new note",
-                          style: GoogleFonts.openSans(
-                              textStyle: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal,
-                                color: Theme.of(context).colorScheme.primary,
-                              )
-                          ),
-                        ),
-                      );
-                    }
-
-                    //display the list
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: notesList.length,
-                      itemBuilder: (context, index) {
-                        DocumentSnapshot document = notesList[index];
-                        String docId = document.id;
-
-                        Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-                        Note note = Note.fromMap(data);
-                        return NoteListTile(
+                        return LockedNote(
                           title: note.title,
                           content: note.content,
                           docId: docId,
@@ -228,7 +137,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }

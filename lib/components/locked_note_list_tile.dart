@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:todo_list/auth/auth_service.dart';
-import 'package:todo_list/services/note_service.dart';
 
+import '../auth/auth_service.dart';
 import '../pages/notes_page.dart';
+import '../services/note_service.dart';
 
-class NoteListTile extends StatelessWidget {
-
+class LockedNote extends StatelessWidget {
   final String title;
   final String content;
   final String docId;
   final void Function(BuildContext, String) openNoteBox;
   final BuildContext context;
-  NoteListTile({super.key, required this.title, required this.content, required this.docId, required this.openNoteBox, required this.context});
+  LockedNote({super.key, required this.title, required this.content, required this.docId, required this.openNoteBox, required this.context});
 
   final NotesService _notesService = NotesService();
   final AuthService _authService = AuthService();
@@ -31,9 +30,9 @@ class NoteListTile extends StatelessWidget {
         child: Container(
           height: 92,
           decoration: BoxDecoration(
-            border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2.0,),
-            borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).colorScheme.background
+              border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2.0,),
+              borderRadius: BorderRadius.circular(15),
+              color: Theme.of(context).colorScheme.background,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -49,11 +48,11 @@ class NoteListTile extends StatelessWidget {
                       child: Text(
                         title,
                         style: GoogleFonts.openSans(
-                          textStyle: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary
-                          )
+                            textStyle: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary
+                            )
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -80,30 +79,6 @@ class NoteListTile extends StatelessWidget {
                   elevation: 16,
                   itemBuilder: (BuildContext context) {
                     return [
-                      //pin button item
-                      PopupMenuItem(
-                        value: 'pin',
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Toggle Pin",
-                                style: GoogleFonts.playfairDisplay(
-                                    textStyle: TextStyle(
-                                        color: Theme.of(context).colorScheme.primary,
-                                        fontSize: 20,
-                                        letterSpacing: 2.0,
-                                        fontWeight: FontWeight.w800
-                                    )
-                                ),
-                              ),
-                              Icon(Icons.vertical_align_top, color: Theme.of(context).colorScheme.primary, size: 20,)
-                            ],
-                          ),
-                        ),
-                      ),
 
                       //lock button item
                       PopupMenuItem(
@@ -114,7 +89,7 @@ class NoteListTile extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Lock",
+                                "Unlock",
                                 style: GoogleFonts.playfairDisplay(
                                     textStyle: TextStyle(
                                         color: Theme.of(context).colorScheme.primary,
@@ -124,7 +99,7 @@ class NoteListTile extends StatelessWidget {
                                     )
                                 ),
                               ),
-                              Icon(Icons.lock_outline, color: Theme.of(context).colorScheme.primary, size: 20,)
+                              Icon(Icons.lock_open, color: Theme.of(context).colorScheme.primary, size: 20,)
                             ],
                           ),
                         ),
@@ -142,10 +117,10 @@ class NoteListTile extends StatelessWidget {
                                 "Edit",
                                 style: GoogleFonts.playfairDisplay(
                                     textStyle: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
-                                      fontSize: 20,
-                                      letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w800
+                                        color: Theme.of(context).colorScheme.primary,
+                                        fontSize: 20,
+                                        letterSpacing: 2.0,
+                                        fontWeight: FontWeight.w800
                                     )
                                 ),
                               ),
@@ -209,30 +184,25 @@ class NoteListTile extends StatelessWidget {
                   onSelected: (dynamic value) async {
                     switch (value) {
                       case 'delete':
-                        //handle delete option
+                      //handle delete option
                         _notesService.deleteNote(docId, _authService.getCurrentUser()!.email.toString());
                         break;
 
                       case 'update':
-                        //handle update option
+                      //handle update option
                         openNoteBox(context, docId);
                         break;
 
                       case 'share':
-                        //handle share option
+                      //handle share option
                         Note note = Note.fromMap(await _notesService.getNoteContentById(_authService.getCurrentUser()!.email.toString(), docId));
                         Share.share('${note.title}\n${note.content}');
                         break;
 
-                      case 'pin':
-                        //handle pin option
-                        Note note = Note.fromMap(await _notesService.getNoteContentById(_authService.getCurrentUser()!.email.toString(), docId));
-                        _notesService.togglePinNote(_authService.getCurrentUser()!.email.toString(), docId, !(note.isPinned));
-                        break;
 
                       case 'lock':
-                        //handle lock option
-                        _notesService.lockNote(_authService.getCurrentUser()!.email.toString(), docId);
+                      //handle lock option
+                        _notesService.unlockNote(_authService.getCurrentUser()!.email.toString(), docId);
                         break;
                     }
                   },
