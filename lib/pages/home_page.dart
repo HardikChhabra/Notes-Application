@@ -26,11 +26,6 @@ class _HomePageState extends State<HomePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => NotesPage(noteId: docId)));
   }
 
-  void logout() {
-    AuthService authService = AuthService();
-    authService.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,9 +42,7 @@ class _HomePageState extends State<HomePage> {
         ),
         toolbarHeight: 30,
       ),
-      drawer: HomeDrawer(
-        onTap: logout,
-      ),
+      drawer: const HomeDrawer(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => openNoteBox(context, null),
         child: const Text(

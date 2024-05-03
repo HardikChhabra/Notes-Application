@@ -4,10 +4,16 @@ import 'package:todo_list/pages/home_page.dart';
 import 'package:todo_list/pages/locked_notes_page.dart';
 import 'package:todo_list/pages/settings_page.dart';
 
+import '../auth/auth_service.dart';
+
 class HomeDrawer extends StatelessWidget {
 
-  final void Function() onTap;
-  const HomeDrawer({super.key, required this.onTap});
+  const HomeDrawer({super.key});
+
+  void logout() {
+    AuthService authService = AuthService();
+    authService.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +108,7 @@ class HomeDrawer extends StatelessWidget {
                 Icons.logout,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onTap: onTap,
+              onTap: logout,
             )
           ],
         ),

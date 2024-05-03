@@ -1,13 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_list/services/note_service.dart';
-
 import '../auth/auth_service.dart';
-import '../components/drawer.dart';
 import '../components/locked_note_list_tile.dart';
-import '../components/notes_list_tile.dart';
 import 'notes_page.dart';
 
 class LockedNotePage extends StatefulWidget {
@@ -26,10 +22,6 @@ class _LockedNotePageState extends State<LockedNotePage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => NotesPage(noteId: docId)));
   }
 
-  void logout() {
-    AuthService authService = AuthService();
-    authService.signOut();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,15 +31,12 @@ class _LockedNotePageState extends State<LockedNotePage> {
           builder: (context) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
             child: IconButton(
-              icon: Icon(Icons.menu_rounded, color: Theme.of(context).colorScheme.primary,),
-              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Icon(Icons.arrow_back_ios, color: Theme.of(context).colorScheme.primary,),
+              onPressed: () => Navigator.pop(context),
             ),
           ),
         ),
         toolbarHeight: 30,
-      ),
-      drawer: HomeDrawer(
-        onTap: logout,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => openNoteBox(context, null),

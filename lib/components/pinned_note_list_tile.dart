@@ -82,7 +82,16 @@ class PinnedNote extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(Typicons.pin, color: Theme.of(context).colorScheme.primary,),
+                    IconButton(
+                      icon: Icon(
+                        Typicons.pin,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      onPressed: () async {
+                        Note note = Note.fromMap(await _notesService.getNoteContentById(_authService.getCurrentUser()!.email.toString(), docId));
+                        _notesService.togglePinNote(_authService.getCurrentUser()!.email.toString(), docId, !(note.isPinned));
+                      },
+                    ),
                     PopupMenuButton<dynamic>(
                       icon: Icon(Icons.more_vert_rounded, color: Theme.of(context).colorScheme.primary,),
                       color: Theme.of(context).colorScheme.background,
