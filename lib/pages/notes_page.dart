@@ -75,13 +75,15 @@ class NotesPage extends StatelessWidget {
                                   icon: Icon(Icons.arrow_back_ios, color: Theme
                                       .of(context)
                                       .colorScheme
-                                      .primary,),
+                                      .primary,
+                                    size: 21,
+                                  ),
                                 ),
                                 Text(
                                   'All notes',
                                   style: GoogleFonts.openSans(
                                       textStyle: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 21,
                                         fontWeight: FontWeight.w500,
                                         color: Theme
                                             .of(context)
@@ -99,7 +101,9 @@ class NotesPage extends StatelessWidget {
                                   Icons.ios_share_outlined, color: Theme
                                     .of(context)
                                     .colorScheme
-                                    .primary,))
+                                    .primary,
+                                  size: 21,
+                                ))
                           ],
                         ),
                       ),
@@ -111,7 +115,7 @@ class NotesPage extends StatelessWidget {
                           child: TextField(
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 21,
                                     fontWeight: FontWeight.w500,
                                     color: Theme
                                         .of(context)
@@ -122,11 +126,12 @@ class NotesPage extends StatelessWidget {
                             controller: _title,
                             maxLines: 2,
                             decoration: InputDecoration(
+                              border: InputBorder.none,
                               hintText: 'Title',
                               hintStyle: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 21,
+                                      fontWeight: FontWeight.w500,
                                       color: Theme
                                           .of(context)
                                           .colorScheme
@@ -146,8 +151,8 @@ class NotesPage extends StatelessWidget {
                           child: TextField(
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
                                     color: Theme
                                         .of(context)
                                         .colorScheme
@@ -157,10 +162,11 @@ class NotesPage extends StatelessWidget {
                             controller: _content,
                             maxLines: null,
                             decoration: InputDecoration(
+                              border: InputBorder.none,
                               hintText: 'Content',
                               hintStyle: GoogleFonts.openSans(
                                   textStyle: TextStyle(
-                                      fontSize: 30,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                       color: Theme
                                           .of(context)
@@ -209,13 +215,15 @@ class NotesPage extends StatelessWidget {
                             icon: Icon(Icons.arrow_back_ios, color: Theme
                                 .of(context)
                                 .colorScheme
-                                .primary,),
+                                .primary,
+                              size: 21,
+                            ),
                           ),
                           Text(
                             'All notes',
                             style: GoogleFonts.openSans(
                                 textStyle: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 21,
                                   fontWeight: FontWeight.w500,
                                   color: Theme
                                       .of(context)
@@ -233,7 +241,9 @@ class NotesPage extends StatelessWidget {
                             Icons.ios_share_outlined, color: Theme
                               .of(context)
                               .colorScheme
-                              .primary,))
+                              .primary,
+                            size: 21,
+                          ))
                     ],
                   ),
                 ),
@@ -246,7 +256,7 @@ class NotesPage extends StatelessWidget {
                       child: TextField(
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                                fontSize: 30,
+                                fontSize: 21,
                                 fontWeight: FontWeight.w500,
                                 color: Theme
                                     .of(context)
@@ -257,10 +267,11 @@ class NotesPage extends StatelessWidget {
                         controller: _title,
                         maxLines: null,
                         decoration: InputDecoration(
+                          border: InputBorder.none,
                           hintText: 'Title',
                           hintStyle: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 21,
                                   fontWeight: FontWeight.w500,
                                   color: Theme
                                       .of(context)
@@ -282,7 +293,7 @@ class NotesPage extends StatelessWidget {
                     child: TextField(
                       style: GoogleFonts.openSans(
                           textStyle: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.w400,
                               color: Theme
                                   .of(context)
@@ -293,10 +304,11 @@ class NotesPage extends StatelessWidget {
                       controller: _content,
                       maxLines: null,
                       decoration: InputDecoration(
+                        border: InputBorder.none,
                         hintText: 'Content',
                         hintStyle: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                                fontSize: 30,
+                                fontSize: 16,
                                 fontWeight: FontWeight.w500,
                                 color: Theme
                                     .of(context)
