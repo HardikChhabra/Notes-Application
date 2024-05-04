@@ -29,8 +29,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
         leading: Builder(
           builder: (context) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
@@ -66,12 +67,12 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "All Notes",
-                    style: GoogleFonts.playfairDisplay(
+                    style: GoogleFonts.nunitoSans(
                         textStyle: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          letterSpacing: 2.0,
+                          fontSize: 21,
+                          letterSpacing: 1.5,
                         )
                     ),
                   ),
@@ -81,15 +82,14 @@ class _HomePageState extends State<HomePage> {
 
             //Pinned Notes Heading
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               child: Text(
                 "Pinned",
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      letterSpacing: 2.0,
+                      fontSize: 16,
                     )
                 ),
               ),
@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
 
             //Pinned notes stream
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4,),
               child: StreamBuilder(
                 stream: _notesService.getPinnedNotesStream(_authService.getCurrentUser()!.email.toString()),
                 builder: (context, snapshot) {
@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                           "No Pinned Notes",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.normal,
                                 color: Theme.of(context).colorScheme.primary,
                               )
@@ -152,15 +152,14 @@ class _HomePageState extends State<HomePage> {
 
             //non-pinned notes heading
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               child: Text(
                 "All Notes",
                 style: GoogleFonts.openSans(
                     textStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      letterSpacing: 2.0,
+                      fontSize: 16,
                     )
                 ),
               ),
@@ -168,7 +167,7 @@ class _HomePageState extends State<HomePage> {
 
             //Non-pinned Notes Stream
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
               child: StreamBuilder(
                 stream: _notesService.getNonPinnedNotesStream(_authService.getCurrentUser()!.email.toString()),
                 builder: (context, snapshot) {
@@ -183,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                           "No notes to Show\nCreate new note",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.normal,
                                 color: Theme.of(context).colorScheme.primary,
                               )
@@ -219,6 +218,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
+            const SizedBox( height: 62,)
           ],
         ),
       )

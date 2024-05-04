@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("S E T T I N G S"),
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }

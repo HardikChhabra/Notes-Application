@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:todo_list/auth/auth_service.dart';
 import 'package:todo_list/services/note_service.dart';
-
 import '../pages/notes_page.dart';
 import 'package:typicons_flutter/typicons_flutter.dart';
 
@@ -30,7 +32,6 @@ class PinnedNote extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Container(
-          height: 150,
           decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2.0,),
               borderRadius: BorderRadius.circular(15),
@@ -39,6 +40,7 @@ class PinnedNote extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
@@ -47,13 +49,15 @@ class PinnedNote extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    //title box
                     SizedBox(
-                      width: 250,
+                      width: MediaQuery.of(context).size.width*0.5,
                       child: Text(
                         title,
+                        softWrap: true,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                                fontSize: 30,
+                                fontSize: 19,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary
                             )
@@ -61,18 +65,21 @@ class PinnedNote extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+
+                    //content box
                     SizedBox(
-                      width: 150,
+                      width: MediaQuery.of(context).size.width*0.5,
+                      height: 115,
                       child: Text(
                         content,
+                        softWrap: true,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               fontWeight: FontWeight.normal,
                               color: Theme.of(context).colorScheme.primary,
                             )
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -82,18 +89,27 @@ class PinnedNote extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+
+                    //pin button
                     IconButton(
                       icon: Icon(
                         Typicons.pin,
                         color: Theme.of(context).colorScheme.primary,
+                        size: 18,
                       ),
                       onPressed: () async {
                         Note note = Note.fromMap(await _notesService.getNoteContentById(_authService.getCurrentUser()!.email.toString(), docId));
                         _notesService.togglePinNote(_authService.getCurrentUser()!.email.toString(), docId, !(note.isPinned));
                       },
                     ),
+
+                    //menu button
                     PopupMenuButton<dynamic>(
-                      icon: Icon(Icons.more_vert_rounded, color: Theme.of(context).colorScheme.primary,),
+                      icon: Icon(
+                        Icons.more_vert_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 18,
+                      ),
                       color: Theme.of(context).colorScheme.background,
                       elevation: 16,
                       itemBuilder: (BuildContext context) {
@@ -107,17 +123,20 @@ class PinnedNote extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Toggle Pin",
-                                    style: GoogleFonts.playfairDisplay(
+                                    "UnPin",
+                                    style: GoogleFonts.openSans(
                                         textStyle: TextStyle(
                                             color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 20,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.w800
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500
                                         )
                                     ),
                                   ),
-                                  Icon(Icons.vertical_align_top, color: Theme.of(context).colorScheme.primary, size: 20,)
+                                  Icon(
+                                    Icons.vertical_align_top,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 18,
+                                  )
                                 ],
                               ),
                             ),
@@ -133,16 +152,18 @@ class PinnedNote extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Lock",
-                                    style: GoogleFonts.playfairDisplay(
+                                    style: GoogleFonts.openSans(
                                         textStyle: TextStyle(
                                             color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 20,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.w800
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500
                                         )
                                     ),
                                   ),
-                                  Icon(Icons.lock_outline, color: Theme.of(context).colorScheme.primary, size: 20,)
+                                  Icon(
+                                    Icons.lock_outline,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 18,)
                                 ],
                               ),
                             ),
@@ -158,16 +179,18 @@ class PinnedNote extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Edit",
-                                    style: GoogleFonts.playfairDisplay(
+                                    style: GoogleFonts.openSans(
                                         textStyle: TextStyle(
                                             color: Theme.of(context).colorScheme.primary,
-                                            fontSize: 20,
-                                            letterSpacing: 2.0,
-                                            fontWeight: FontWeight.w800
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500
                                         )
                                     ),
                                   ),
-                                  Icon(Icons.edit, color: Theme.of(context).colorScheme.primary, size: 20,)
+                                  Icon(
+                                    Icons.edit,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 18,)
                                 ],
                               ),
                             ),
@@ -183,16 +206,18 @@ class PinnedNote extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Delete",
-                                    style: GoogleFonts.playfairDisplay(
+                                    style: GoogleFonts.openSans(
                                         textStyle: TextStyle(
                                           color: Theme.of(context).colorScheme.primary,
-                                          fontSize: 20,
-                                          letterSpacing: 2.0,
-                                          fontWeight: FontWeight.w800,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
                                         )
                                     ),
                                   ),
-                                  Icon(Icons.delete_forever, color: Theme.of(context).colorScheme.primary, size: 20,)
+                                  Icon(
+                                    Icons.delete_forever,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 18,)
                                 ],
                               ),
                             ),
@@ -208,16 +233,18 @@ class PinnedNote extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Share",
-                                    style: GoogleFonts.playfairDisplay(
+                                    style: GoogleFonts.openSans(
                                         textStyle: TextStyle(
                                           color: Theme.of(context).colorScheme.primary,
-                                          fontSize: 20,
-                                          letterSpacing: 2.0,
-                                          fontWeight: FontWeight.w800,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
                                         )
                                     ),
                                   ),
-                                  Icon(Icons.share, color: Theme.of(context).colorScheme.primary, size: 20,)
+                                  Icon(
+                                    Icons.share,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 18,)
                                 ],
                               ),
                             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../auth/auth_service.dart';
 import '../pages/notes_page.dart';
 import '../services/note_service.dart';
@@ -28,7 +27,7 @@ class LockedNote extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Container(
-          height: 92,
+          height: 50+23,
           decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2.0,),
               borderRadius: BorderRadius.circular(15),
@@ -43,13 +42,15 @@ class LockedNote extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+
+                    //title box
                     SizedBox(
-                      width: 250,
+                      width: MediaQuery.of(context).size.width*0.5,
                       child: Text(
                         title,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                                fontSize: 30,
+                                fontSize: 19,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary
                             )
@@ -57,14 +58,16 @@ class LockedNote extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+
+                    //content box
                     SizedBox(
-                      width: 120,
+                      width: MediaQuery.of(context).size.width*0.4,
                       child: Text(
                         content,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
                               color: Theme.of(context).colorScheme.primary,
                             )
                         ),
@@ -73,8 +76,14 @@ class LockedNote extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                //Icons(Menu)
                 PopupMenuButton<dynamic>(
-                  icon: Icon(Icons.more_vert_rounded, color: Theme.of(context).colorScheme.primary,),
+                  icon: Icon(
+                    Icons.more_vert_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 18,
+                  ),
                   color: Theme.of(context).colorScheme.background,
                   elevation: 16,
                   itemBuilder: (BuildContext context) {
@@ -89,17 +98,19 @@ class LockedNote extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Unlock",
-                                style: GoogleFonts.playfairDisplay(
+                                "UnLock",
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: Theme.of(context).colorScheme.primary,
-                                        fontSize: 20,
-                                        letterSpacing: 2.0,
-                                        fontWeight: FontWeight.w800
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500
                                     )
                                 ),
                               ),
-                              Icon(Icons.lock_open, color: Theme.of(context).colorScheme.primary, size: 20,)
+                              Icon(
+                                Icons.lock_open_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 18,)
                             ],
                           ),
                         ),
@@ -115,16 +126,18 @@ class LockedNote extends StatelessWidget {
                             children: [
                               Text(
                                 "Edit",
-                                style: GoogleFonts.playfairDisplay(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: Theme.of(context).colorScheme.primary,
-                                        fontSize: 20,
-                                        letterSpacing: 2.0,
-                                        fontWeight: FontWeight.w800
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500
                                     )
                                 ),
                               ),
-                              Icon(Icons.edit, color: Theme.of(context).colorScheme.primary, size: 20,)
+                              Icon(
+                                Icons.edit,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 18,)
                             ],
                           ),
                         ),
@@ -140,16 +153,18 @@ class LockedNote extends StatelessWidget {
                             children: [
                               Text(
                                 "Delete",
-                                style: GoogleFonts.playfairDisplay(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                       color: Theme.of(context).colorScheme.primary,
-                                      fontSize: 20,
-                                      letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w800,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
                                     )
                                 ),
                               ),
-                              Icon(Icons.delete_forever, color: Theme.of(context).colorScheme.primary, size: 20,)
+                              Icon(
+                                Icons.delete_forever,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 18,)
                             ],
                           ),
                         ),
@@ -165,16 +180,18 @@ class LockedNote extends StatelessWidget {
                             children: [
                               Text(
                                 "Share",
-                                style: GoogleFonts.playfairDisplay(
+                                style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                       color: Theme.of(context).colorScheme.primary,
-                                      fontSize: 20,
-                                      letterSpacing: 2.0,
-                                      fontWeight: FontWeight.w800,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
                                     )
                                 ),
                               ),
-                              Icon(Icons.share, color: Theme.of(context).colorScheme.primary, size: 20,)
+                              Icon(
+                                Icons.share,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 18,)
                             ],
                           ),
                         ),

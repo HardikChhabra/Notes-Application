@@ -25,8 +25,9 @@ class _LockedNotePageState extends State<LockedNotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
         leading: Builder(
           builder: (context) => Padding(
             padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 8.0),
@@ -59,18 +60,20 @@ class _LockedNotePageState extends State<LockedNotePage> {
                 children: [
                   Text(
                     "Locked Notes",
-                    style: GoogleFonts.playfairDisplay(
+                    style: GoogleFonts.nunitoSans(
                         textStyle: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                          letterSpacing: 2.0,
+                          fontSize: 21,
+                          letterSpacing: 1.5,
                         )
                     ),
                   ),
                 ],
               ),
             ),
+
+            //locked notes stream
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: StreamBuilder(
@@ -87,7 +90,7 @@ class _LockedNotePageState extends State<LockedNotePage> {
                           "No Locked Notes",
                           style: GoogleFonts.openSans(
                               textStyle: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.normal,
                                 color: Theme.of(context).colorScheme.primary,
                               )
