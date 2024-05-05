@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         toolbarHeight: 30,
+        forceMaterialTransparency: true,
       ),
       drawer: const HomeDrawer(),
       floatingActionButton: FloatingActionButton(
