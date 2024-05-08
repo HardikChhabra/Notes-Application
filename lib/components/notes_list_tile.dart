@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:todo_list/auth/auth_service.dart';
@@ -36,7 +34,7 @@ class NoteListTile extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1.5,),
             borderRadius: BorderRadius.circular(15),
-            color: Theme.of(context).colorScheme.background
+            color: Theme.of(context).colorScheme.secondary,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
@@ -70,6 +68,7 @@ class NoteListTile extends StatelessWidget {
                     //content box
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
+                      height: 69,
                       child: Text(
                         content,
                         style: GoogleFonts.openSans(
@@ -80,6 +79,7 @@ class NoteListTile extends StatelessWidget {
                             )
                         ),
                         overflow: TextOverflow.ellipsis,
+                        softWrap: true,
                       ),
                     ),
                   ],

@@ -31,7 +31,7 @@ class LockedNote extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2.0,),
               borderRadius: BorderRadius.circular(15),
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.secondary,
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
