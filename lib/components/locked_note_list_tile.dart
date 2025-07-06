@@ -62,6 +62,7 @@ class LockedNote extends StatelessWidget {
                     //content box
                     SizedBox(
                       width: MediaQuery.of(context).size.width*0.4,
+                      height: 26,
                       child: Text(
                         content,
                         style: GoogleFonts.openSans(
@@ -72,6 +73,7 @@ class LockedNote extends StatelessWidget {
                             )
                         ),
                         overflow: TextOverflow.ellipsis,
+                        softWrap: true,
                       ),
                     ),
                   ],
