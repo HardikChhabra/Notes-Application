@@ -185,7 +185,9 @@ class NotesPage extends StatelessWidget {
             );
           }
           else {
-            return const Text("No notes");
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
         },
       );
